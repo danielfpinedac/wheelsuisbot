@@ -13,7 +13,6 @@ CODIGOS = {"456"}
 def home():
     return "✅ Wheelsuis BOT activo", 200
 
-
 @app.route("/webhook", methods=["GET"])
 def verify_token():
     token = request.args.get("hub.verify_token")
@@ -21,7 +20,6 @@ def verify_token():
     if token == VERIFY_TOKEN:
         return challenge
     return "Verification failed", 403
-
 
 @app.route("/webhook", methods=["POST"])
 def receive_message():
@@ -106,8 +104,8 @@ def join_group(barrio):
         return redirect(GRUPOS[barrio], code=302)
     return "❌ Enlace no encontrado", 404
 
-
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
     app.run(host="0.0.0.0", port=port)
+
 
