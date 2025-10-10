@@ -6,11 +6,8 @@ app = Flask(__name__)
 # === CONFIGURACIÓN ===
 VERIFY_TOKEN = "wheelsuis_token123"
 
-def get_access_token():
-    with open("token.txt", "r") as f:
-        return f.read().strip()
-
-ACCESS_TOKEN = get_access_token()
+import os
+ACCESS_TOKEN = os.getenv("ACCESS_TOKEN")
 
 # === Códigos válidos ===
 CODIGOS = {"456"}
@@ -20,7 +17,6 @@ CODIGOS = {"456"}
 def home():
     return "✅ Wheelsuis BOT activo", 200
 
-
 @app.route("/webhook", methods=["GET"])
 def verify_token():
     token = request.args.get("hub.verify_token")
@@ -28,7 +24,6 @@ def verify_token():
     if token == VERIFY_TOKEN:
         return challenge
     return "Verification failed", 403
-
 
 @app.route("/webhook", methods=["POST"])
 def receive_message():
@@ -105,8 +100,6 @@ def receive_message():
 
     return "EVENT_RECEIVED", 200
 
-
-# === Redirección segura a los grupos ===
 GRUPOS = {
     "canaveral": "https://chat.whatsapp.com/DwEO6W9a2WM15UDFH9pRrB"
 }
